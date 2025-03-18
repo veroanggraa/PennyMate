@@ -2,6 +2,7 @@ package com.veroanggra.pennymate.auth.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.veroanggra.pennymate.R
 import com.veroanggra.pennymate.component.RectButtonTextFilled
 import com.veroanggra.pennymate.component.RectButtonTextIconOutline
@@ -27,7 +29,7 @@ import com.veroanggra.pennymate.ui.theme.BlueDark
 import com.veroanggra.pennymate.ui.theme.GrayB6B7B8
 
 @Composable
-fun AuthScreen(modifier: Modifier = Modifier) {
+fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -67,7 +69,10 @@ fun AuthScreen(modifier: Modifier = Modifier) {
             Text(text = "Don’t have account?", color = Black3C4E57)
             Spacer(modifier = modifier.width(10.dp))
             Text(
-                text = "Sign Up",
+                modifier = modifier.clickable {
+                    navController.navigate("signup")
+                },
+                        text = "Sign Up",
                 color = BlueDark,
                 fontWeight = FontWeight.Bold
             )
