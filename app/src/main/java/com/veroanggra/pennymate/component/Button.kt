@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,12 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.veroanggra.pennymate.R
@@ -37,15 +38,17 @@ fun RectButtonTextFilled(
     label: String,
     colorButton: Color,
     colorLabel: Color,
-    width: Int = 280,
-    height: Int = 48
+    padding: Dp,
+    height: Dp
 ) {
     TextButton(
         onClick = onClick,
         modifier
+            .fillMaxWidth()
+            .padding(start = padding, end = padding)
             .clip(RoundedCornerShape(4.dp))
-            .width(width.dp)
-            .height(height.dp)
+            .padding()
+            .height(height)
             .background(color = colorButton)
     ) {
         Text(
@@ -66,16 +69,17 @@ fun RectButtonTextIconOutline(
     colorButton: Color,
     colorOutline: Color,
     colorLabel: Color,
-    width: Int = 280,
-    height: Int = 48,
+    padding: Dp,
+    height: Dp,
     icon: Int = R.drawable.ic_google
 ) {
     Row(
         modifier
+            .fillMaxWidth()
+            .padding(start = padding, end = padding)
             .clip(RoundedCornerShape(4.dp))
             .border(width = 1.dp, color = colorOutline, shape = RoundedCornerShape(4.dp))
-            .width(width.dp)
-            .height(height.dp)
+            .height(height)
             .background(color = colorButton)
             .clickable { onClick },
         horizontalArrangement = Arrangement.Start,
@@ -96,17 +100,4 @@ fun RectButtonTextIconOutline(
             modifier = modifier.weight(1f), textAlign = TextAlign.Center
         )
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun RectButtonTextFilledPreview() {
-    RectButtonTextFilled(
-        modifier = Modifier,
-        onClick = {},
-        label = "Sign In",
-        colorButton = BlueDark,
-        colorLabel = Color.White
-    )
 }
