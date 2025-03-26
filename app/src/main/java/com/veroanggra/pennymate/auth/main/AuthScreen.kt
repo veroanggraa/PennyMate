@@ -46,16 +46,20 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
         Spacer(modifier = modifier.height(40.dp))
         RectButtonTextFilled(
             modifier = modifier.align(Alignment.CenterHorizontally),
-            onClick = {},
+            onClick = {
+                navController.navigate("signin")
+            },
             label = "Sign In",
             colorButton = BlueDark,
-            colorLabel = Color.White
+            colorLabel = Color.White, padding = 40.dp, height = 48.dp
         )
         Spacer(modifier = modifier.height(16.dp))
         RectButtonTextIconOutline(
             modifier = modifier.align(Alignment.CenterHorizontally),
             onClick = {},
             label = "Sign in with Google",
+            padding = 40.dp,
+            height = 48.dp,
             colorButton = Color.White,
             colorOutline = GrayB6B7B8,
             colorLabel = GrayB6B7B8
@@ -72,7 +76,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
                 modifier = modifier.clickable {
                     navController.navigate("signup")
                 },
-                        text = "Sign Up",
+                text = "Sign Up",
                 color = BlueDark,
                 fontWeight = FontWeight.Bold
             )
