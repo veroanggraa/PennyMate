@@ -73,7 +73,9 @@ fun SplitBillLandingScreen(modifier: Modifier = Modifier, navController: NavCont
                 Spacer(modifier = modifier.height(40.dp))
                 RectButtonTextFilled(
                     modifier = modifier.align(Alignment.CenterHorizontally),
-                    onClick = {},
+                    onClick = {
+                        navController.navigate("split_bill_main")
+                    },
                     label = "Add Bill",
                     colorButton = BlueDark,
                     colorLabel = Color.White,
