@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PennyMate</string>
+    <string name="txt_camera_permission_info_first">The camera is mandatory in order to use the vision ML kit abilities. Please grant the permission.</string>
+    <string name="txt_camera_permission_info_second">The camera is mandatory in order to use the vision ML kit abilities. Please grant the permission going to the settings screen.</string>
 </resources>
