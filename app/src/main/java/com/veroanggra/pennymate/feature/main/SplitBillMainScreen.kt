@@ -65,3 +65,4 @@ fun SplitBillMainScreen(modifier: Modifier = Modifier) {
         }
     ) {}
 }
+
