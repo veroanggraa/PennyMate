@@ -9,12 +9,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CustomAlert(modifier: Modifier = Modifier, title: String ,onDismissRequest: () -> Unit) {
+fun CustomAlert(modifier: Modifier = Modifier, title: String, content : String, onDismissRequest: () -> Unit) {
     val openDialog = remember { mutableStateOf(false)  }
     AlertDialog(
         onDismissRequest = {},
-        title = {},
-        text = {},
+        title = { Text(title) },
+        text = { Text(content) },
         confirmButton = {
             Button(
 
