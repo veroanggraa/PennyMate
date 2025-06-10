@@ -30,6 +30,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.veroanggra.pennymate.component.CameraPermissionDialog
+import com.veroanggra.pennymate.component.ScanLineAnimation
 import java.lang.Exception
 import java.util.concurrent.Executors
 
@@ -107,6 +108,7 @@ fun CameraScanScreen(modifier: Modifier = Modifier, onBillScanned: (String) -> U
                 previewView
             }
         )
+        ScanLineAnimation(modifier = modifier.fillMaxSize())
     }
 }
 
