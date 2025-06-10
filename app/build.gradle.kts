@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -60,11 +61,33 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.coil.compose)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    // firebase
+//    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    // koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    // coroutine
+    implementation(libs.kotlinx.coroutines.android)
+
+    // camerax
     implementation(libs.camera.core)
     implementation(libs.camera.camera2)
     implementation(libs.camera.view)
-    implementation(libs.accompanist.permissions)
+    implementation(libs.camera.lifecycle)
+
+    // mlkit
+    implementation(libs.text.recognition)
+    implementation(libs.play.services.mlkit.text.recognition)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
