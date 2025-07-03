@@ -23,23 +23,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.veroanggra.pennymate.Screen
 import com.veroanggra.pennymate.component.CameraPermissionDialog
 import com.veroanggra.pennymate.component.ScanLineAnimation
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.lang.Exception
 import java.util.concurrent.Executors
 
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun SplitBillMainScreen(modifier: Modifier = Modifier) {
+fun SplitBillMainScreen(modifier: Modifier = Modifier, navController: NavController) {
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
     var showCameraPermissionDialog by remember { mutableStateOf(false) }
+    var hasNavigated by remember { mutableStateOf(false) }
     var scannerBillText by remember { mutableStateOf("") }
 
     LaunchedEffect(cameraPermissionState.hasPermission) {
@@ -59,6 +64,16 @@ fun SplitBillMainScreen(modifier: Modifier = Modifier) {
     } else {
         if (cameraPermissionState.hasPermission) {
             CameraScanScreen(modifier = modifier, onBillScanned = { text ->
+                if (text.isNotBlank() && !!hasNavigated) {
+                    val parsedBill = BillParser.parseScannedTextToBillDetails(text)
+                    if (parsedBill != null && (parsedBill.items.isNotEmpty() || parsedBill.total.toDouble() > 0.0)) {
+                        try {
+                            val jsonString = Json.encodeToString(parsedBill)
+                            hasNavigated = true
+                            navController.navigate(Screen.SplitBillMainScreen.route)
+                        }
+                    }
+                }
                 scannerBillText = text
                 Log.d("SplitBillMainScreen", "Scanned Bill Text: $scannerBillText")
             })

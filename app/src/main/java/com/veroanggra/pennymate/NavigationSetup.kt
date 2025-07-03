@@ -1,13 +1,17 @@
 package com.veroanggra.pennymate
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.veroanggra.pennymate.auth.main.AuthScreen
 import com.veroanggra.pennymate.auth.signin.SignInScreen
 import com.veroanggra.pennymate.auth.signup.SignUpScreen
+import com.veroanggra.pennymate.feature.detail.SplitBillResultScreen
 import com.veroanggra.pennymate.feature.landing.SplitBillLandingScreen
 import com.veroanggra.pennymate.feature.main.SplitBillMainScreen
 
@@ -18,6 +22,9 @@ sealed class Screen(val route: String) {
     data object SignIn : Screen("signin")
     data object SplitBillLandingScreen : Screen("split_bill_landing")
     data object SplitBillMainScreen : Screen("split_bill_main")
+    data object SplitBillResultScreen : Screen("split_bill_result/{billJson}") {
+        fun createRoute(billJson: String) = "split_bill_result/${Uri.encode(billJson)}"
+    }
 }
 
 @Composable
@@ -27,8 +34,31 @@ fun MainNavigation(modifier: Modifier = Modifier) {
         composable(Screen.MainAuth.route) { AuthScreen(modifier, navController) }
         composable(Screen.SignUp.route) { SignUpScreen(modifier, navController) }
         composable(Screen.SignIn.route) { SignInScreen(modifier, navController) }
-        composable(Screen.SplitBillLandingScreen.route) { SplitBillLandingScreen(modifier, navController) }
-        composable(Screen.SplitBillMainScreen.route) { SplitBillMainScreen(modifier) }
+        composable(Screen.SplitBillLandingScreen.route) {
+            SplitBillLandingScreen(
+                modifier,
+                navController
+            )
+        }
+        composable(Screen.SplitBillMainScreen.route) {
+            SplitBillMainScreen(
+                modifier,
+                navController
+            )
+        }
+        composable(Screen.SplitBillResultScreen.route, listOf(navArgument("billJson") {
+            type =
+                NavType.StringType
+        })) { backStackEntry ->
+            val billJson = backStackEntry.arguments?.getString("billJson")
+            billJson?.let {
+                SplitBillResultScreen(
+                    modifier = modifier,
+                    billJson = it,
+                    navController = navController
+                )
+            }
+        }
 
     }
 }

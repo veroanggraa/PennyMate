@@ -23,6 +23,7 @@ versionRuntimeLifecycle = "2.8.7"
 versionCoroutine = "1.7.3"
 mlKitOffline = "16.0.1"
 mlKitOnline = "19.0.1"
+kotlinxSerializationJson = "1.6.3"
 
 
 [libraries]
@@ -60,11 +61,14 @@ koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compos
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "versionCoroutine" }
 text-recognition = {group = "com.google.mlkit", name = "text-recognition", version.ref = "mlKitOffline"}
 play-services-mlkit-text-recognition = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition", version.ref = "mlKitOnline"}
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
 
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServicesVersion" }
 
