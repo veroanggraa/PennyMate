@@ -8,6 +8,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -64,13 +66,15 @@ fun SplitBillMainScreen(modifier: Modifier = Modifier, navController: NavControl
     } else {
         if (cameraPermissionState.hasPermission) {
             CameraScanScreen(modifier = modifier, onBillScanned = { text ->
-                if (text.isNotBlank() && !!hasNavigated) {
+                if (text.isNotBlank() && !hasNavigated) {
                     val parsedBill = BillParser.parseScannedTextToBillDetails(text)
                     if (parsedBill != null && (parsedBill.items.isNotEmpty() || parsedBill.total.toDouble() > 0.0)) {
                         try {
                             val jsonString = Json.encodeToString(parsedBill)
                             hasNavigated = true
-                            navController.navigate(Screen.SplitBillMainScreen.route)
+                            navController.navigate(Screen.SplitBillResultScreen.createRoute(jsonString))
+                        } catch (e: Exception) {
+                            Log.e("SplitBillMainScreen", "Error encoding or navigating", e)
                         }
                     }
                 }
@@ -78,7 +82,11 @@ fun SplitBillMainScreen(modifier: Modifier = Modifier, navController: NavControl
                 Log.d("SplitBillMainScreen", "Scanned Bill Text: $scannerBillText")
             })
         } else {
-            Column {
+            Column(
+                modifier = modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(text = "Camera permission denied, cannot scan bill")
                 Button(onClick = { showCameraPermissionDialog = true }) {
                     Text(text = "Grant Permission")
